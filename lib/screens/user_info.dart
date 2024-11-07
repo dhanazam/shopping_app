@@ -1,38 +1,142 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_app/consts/colors.dart';
 
 class UserInfo extends StatefulWidget {
+  const UserInfo({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _UserInfoState createState() => _UserInfoState();
 }
 
 class _UserInfoState extends State<UserInfo> {
   bool _value = false;
+  late ScrollController _scrollController;
+  var top = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            titles('User info'),
-            userListTile('Email', 'Email sub', Icons.email, context),
-            userListTile('Phone', '4555', Icons.phone, context),
-            userListTile('Shipping', '4555', Icons.local_shipping, context),
-            userListTile('Order', '4555', Icons.watch_later, context),
-            userListTile('Logout', '4555', Icons.exit_to_app, context),
-            SwitchListTile(
-              value: _value,
-              onChanged: (value) {
-                setState(() {
-                  _value = value;
-                });
+      body: CustomScrollView(
+        controller: _scrollController,
+        slivers: <Widget>[
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            elevation: 4,
+            expandedHeight: 200,
+            pinned: true,
+            flexibleSpace: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                top = constraints.biggest.height;
+                return Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [
+                          ColorsConsts.starterColor,
+                          ColorsConsts.endColor
+                        ],
+                        begin: const FractionalOffset(0.0, 0.0),
+                        end: const FractionalOffset(1.0, 0.0),
+                        stops: const [0.0, 1.0],
+                        tileMode: TileMode.clamp),
+                  ),
+                  child: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.parallax,
+                    centerTitle: true,
+                    title: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AnimatedOpacity(
+                          duration: const Duration(milliseconds: 300),
+                          opacity: top <= 110 ? 1.0 : 0.0,
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              Container(
+                                height: kToolbarHeight / 1.8,
+                                width: kToolbarHeight / 1.8,
+                                decoration: const BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.white,
+                                      blurRadius: 1.0,
+                                    )
+                                  ],
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(
+                                      'https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              const Text(
+                                'Guest',
+                                style: TextStyle(
+                                    fontSize: 20.0, color: Colors.white),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    background: const Image(
+                      image: NetworkImage(
+                          'https://cdn1.vectorstock.com/i/thumb-large/62/60/default-avatar-photo-placeholder-profile-image-vector-21666260.jpg'),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                );
               },
-              title: const Text('Dark Mode'),
-              secondary: const Icon(Icons.dark_mode),
-            )
-          ],
-        ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: userTitle('Account Information'),
+                ),
+                const Divider(
+                  thickness: 1,
+                  color: Colors.grey,
+                ),
+                userListTile('Email', 'Email sub', Icons.email, context),
+                userListTile('Email', 'Email sub', Icons.email, context),
+                userListTile('Email', 'Email sub', Icons.email, context),
+                userListTile('Email', 'Email sub', Icons.email, context),
+                userListTile('Email', 'Email sub', Icons.email, context),
+                const Padding(padding: EdgeInsets.only(left: 8.0)),
+                SwitchListTile(
+                  value: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  },
+                ),
+                userListTile('Email', 'Email sub', Icons.email, context),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -59,6 +163,16 @@ class _UserInfoState extends State<UserInfo> {
           subtitle: Text(subtitle),
           leading: Icon(icon),
         ),
+      ),
+    );
+  }
+
+  Widget userTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.all(14.0),
+      child: Text(
+        title,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
       ),
     );
   }
