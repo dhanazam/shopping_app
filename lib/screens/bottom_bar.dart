@@ -26,7 +26,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       {'page': const FeedsScreen(), 'title': 'Feeds screen'},
       {'page': const SearchScreen(), 'title': 'Search Screen'},
       {'page': const CartScreen(), 'title': 'CartScreen'},
-      {'page': UserInfoScreen(), 'title': 'UserScreen'}
+      {'page': UserInfo(), 'title': 'UserScreen'}
     ];
     super.initState();
   }

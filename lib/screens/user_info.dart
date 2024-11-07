@@ -1,33 +1,54 @@
 import 'package:flutter/material.dart';
 
-class UserInfoScreen extends StatelessWidget {
-  UserInfoScreen({super.key});
+class UserInfo extends StatefulWidget {
+  @override
+  _UserInfoState createState() => _UserInfoState();
+}
 
+class _UserInfoState extends State<UserInfo> {
+  bool _value = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(children: [
-          userListTile('Email', 'Email sub', 0, context),
-          userListTile('Phone', '4555', 0, context),
-          userListTile('Shipping', '4555', 0, context),
-          userListTile('Order', '4555', 0, context),
-          userListTile('Logout', '4555', 0, context),
-        ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            titles('User info'),
+            userListTile('Email', 'Email sub', Icons.email, context),
+            userListTile('Phone', '4555', Icons.phone, context),
+            userListTile('Shipping', '4555', Icons.local_shipping, context),
+            userListTile('Order', '4555', Icons.watch_later, context),
+            userListTile('Logout', '4555', Icons.exit_to_app, context),
+            SwitchListTile(
+              value: _value,
+              onChanged: (value) {
+                setState(() {
+                  _value = value;
+                });
+              },
+              title: const Text('Dark Mode'),
+              secondary: const Icon(Icons.dark_mode),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  final List<IconData> _userTileIcons = [
-    Icons.email,
-    Icons.phone,
-    Icons.local_shipping,
-    Icons.watch_later,
-    Icons.exit_to_app
-  ];
+  Widget titles(String text) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        text,
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
 
   Widget userListTile(
-      String title, String subtitle, int index, BuildContext context) {
+      String title, String subtitle, IconData icon, BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -36,7 +57,7 @@ class UserInfoScreen extends StatelessWidget {
           onTap: () {},
           title: Text(title),
           subtitle: Text(subtitle),
-          leading: Icon(_userTileIcons[index]),
+          leading: Icon(icon),
         ),
       ),
     );
