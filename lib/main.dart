@@ -9,10 +9,24 @@ void main() {
 }
 
 // ignore: must_be_immutable
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
 
-  MainApp({super.key});
+  void getCurrentAppTheme() async {
+    themeChangeProvider.darkTheme =
+        await themeChangeProvider.darkThemePreferences.getTheme();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentAppTheme();
+  }
 
   @override
   Widget build(BuildContext context) {
