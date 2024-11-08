@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/consts/my_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:shopping_app/provider/dark_theme_provider.dart';
 
 class UserInfo extends StatefulWidget {
   const UserInfo({super.key});
@@ -25,6 +27,8 @@ class _UserInfoState extends State<UserInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final themeChange = Provider.of<DarkThemeProvider>(context);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -158,10 +162,10 @@ class _UserInfoState extends State<UserInfo> {
                       color: Colors.grey,
                     ),
                     SwitchListTile(
-                      value: false,
+                      value: themeChange.darkTheme,
                       onChanged: (value) {
                         setState(() {
-                          // themeChange.darkTheme = value;
+                          themeChange.darkTheme = value;
                         });
                       },
                       visualDensity: VisualDensity.comfortable,
