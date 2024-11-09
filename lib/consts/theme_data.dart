@@ -6,8 +6,12 @@ class Styles {
       scaffoldBackgroundColor:
           isDarkTheme ? Colors.black : Colors.grey.shade300,
       primarySwatch: Colors.purple,
+
       primaryColor: isDarkTheme ? Colors.black : Colors.grey.shade300,
-      // accentColor: Colors.deepPurple,
+      colorScheme: isDarkTheme
+          ? const ColorScheme.dark(secondary: Colors.deepPurple)
+          : const ColorScheme.light(
+              secondary: Colors.deepPurple), // Set the accent color
       // backgroundColor: isDarkTheme ? Colors.grey.shade700 : Colors.white,
       indicatorColor:
           isDarkTheme ? const Color(0xff0E1D36) : const Color(0xffCBDCF8),
@@ -20,7 +24,11 @@ class Styles {
       focusColor:
           isDarkTheme ? const Color(0xff0B2512) : const Color(0xffA8DAB5),
       disabledColor: Colors.grey,
-      // textSelectionColor: isDarkTheme ? Colors.white : Colors.black,
+      textSelectionTheme: TextSelectionThemeData(
+        selectionColor: isDarkTheme ? Colors.white : Colors.black,
+        cursorColor: isDarkTheme ? Colors.white : Colors.black,
+        selectionHandleColor: isDarkTheme ? Colors.white : Colors.black,
+      ),
       cardColor: isDarkTheme ? const Color(0xFF151515) : Colors.white,
       canvasColor: isDarkTheme ? Colors.black : Colors.grey[50],
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,

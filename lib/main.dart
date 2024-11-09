@@ -5,11 +5,13 @@ import 'package:shopping_app/provider/dark_theme_provider.dart';
 import 'package:shopping_app/screens/bottom_bar.dart';
 
 void main() {
-  runApp(MainApp());
+  runApp(const MainApp());
 }
 
 // ignore: must_be_immutable
 class MainApp extends StatefulWidget {
+  const MainApp({super.key});
+
   @override
   State<MainApp> createState() => _MainAppState();
 }
